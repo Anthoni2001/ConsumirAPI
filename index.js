@@ -10,6 +10,12 @@ app.get('/', async (req, res) => {
     const response = await axios.get('https://thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail');
     const cocktails = response.data.drinks || [];
 
+
+// Configuración de las vistas (debe ir antes de las rutas que utilizan render)
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
     res.render('index', { cocktails });
   } catch (error) {
     console.error('Error al obtener datos de la API:', error.message);
@@ -24,6 +30,7 @@ app.get('/cocktail/:id', async (req, res) => {
     const response = await axios.get(`https://thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailId}`);
     const cocktail = response.data.drinks ? response.data.drinks[0] : null;
 
+    
     res.render('detail', { cocktail });
   } catch (error) {
     console.error('Error al obtener detalles del cóctel:', error.message);
@@ -35,21 +42,16 @@ app.get('/cocktail/:id', async (req, res) => {
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+
+// Ruta que utiliza render
+app.get('/', (req, res) => {
+    res.render('index.ejs');  // Asegúrate de que 'index' sea el nombre correcto de tu vista
+});
+
 // Inicia el servidor
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-// Configuración de las vistas
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');  // O el motor de vistas que estés utilizando
 
-// Configuración de las vistas (debe ir antes de las rutas que utilizan render)
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-// Ruta que utiliza render
-app.get('/', (req, res) => {
-    res.render('index');  // Asegúrate de que 'index' sea el nombre correcto de tu vista
-});
 
