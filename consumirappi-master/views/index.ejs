@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Cócteles</title>
+</head>
+<body>
+  <h1>Lista de Cócteles</h1>
+  <div>
+    <% for (const cocktail of cocktails.slice(0, 4)) { %>
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+        <h2><%= cocktail.strDrink %></h2>
+        <p><%= cocktail.strCategory %></p>
+        <p><%= cocktail.strInstructions %></p>
+        <a href="/cocktail/<%= cocktail.idDrink %>">Ver Detalles</a>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
